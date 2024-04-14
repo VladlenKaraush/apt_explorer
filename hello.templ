@@ -1,0 +1,37 @@
+package main
+
+import "strconv"
+import "go-templ/api"
+
+templ hello(p string) {
+<p class="spaced">{ p }</p>
+}
+
+templ pkgs(pkgs []api.Package) {
+<div class="w-1/2 p-4 mx-auto">
+	<div>
+		<table>
+			<thead class="bg-gray-50">
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Version</th>
+					<th>Architecture</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody class="divide-y divide-gray-200">
+				for i, item := range pkgs {
+				<tr class="text-gray-500">
+					<th>{ strconv.Itoa(i) }</th>
+					<th>{ item.Name }</th>
+					<th>{ item.Version }</th>
+					<th>{ item.Arch }</th>
+					<th>{ item.Desc }</th>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+}

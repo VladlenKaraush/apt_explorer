@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+	<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+	<link rel="stylesheet" href="/static/css/tailwind.css" />
+	<meta charset=utf-8>
+	<title>blah</title>
+	<style>
+		.spaced {
+			white-space: pre-wrap;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- have a button POST a click via AJAX -->
+	<button hx-post="/clicked" hx-swap="outerHTML">
+		Click Me
+	</button>
+	<button hx-get="/pkgs" hx-swap="outerHTML">
+		Packages
+	</button>
+	<button hx-get="/releases" hx-swap="outerHTML">
+		Release Indices
+	</button>
+
+	<button hx-get="/release" hx-swap="outerHTML">
+		Single release
+	</button>
+</body>
+
+</html>
