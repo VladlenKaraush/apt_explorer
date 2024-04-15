@@ -1,0 +1,32 @@
+ # Id, ReleaseUrl, Registry, Suite string
+ releases:
+ - 
+     Id: "1"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/mantic/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "mantic"
+ -
+     Id: "2"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/lunar/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "lunar"
+ -
+     Id: "3"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/bionic/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "bionic"
+ -
+     Id: "4"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/jammy/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "jammy"
+ -
+     Id: "5"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/focal/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "focal"
+ -
+     Id: "6"
+     ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/devel/Release"
+     Registry:   "http://archive.ubuntu.com/ubuntu/"
+     Suite:      "devel"

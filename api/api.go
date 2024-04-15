@@ -30,7 +30,7 @@ import (
 //  This is a udeb, or a microdeb, for the debian-installer.
 
 type ReleaseIndex struct {
-	ReleaseUrl, Registry, Suite string
+	Id, ReleaseUrl, Registry, Suite string
 }
 
 type Package struct {

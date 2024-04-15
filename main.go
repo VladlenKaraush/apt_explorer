@@ -2,15 +2,18 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"go-templ/api"
 	"net/http"
 	"os"
 	"runtime/pprof"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
+	"gopkg.in/yaml.v3"
 )
 
 var releasePaths = []string{
@@ -23,32 +26,8 @@ var releasePaths = []string{
 }
 
 var releaseList = []api.ReleaseIndex{
-	// {
-	// 	ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/bionic/Release",
-	// 	Registry:   "http://archive.ubuntu.com/ubuntu/",
-	// 	Suite:      "bionic",
-	// },
-	// {
-	// 	ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/jammy/Release",
-	// 	Registry:   "http://archive.ubuntu.com/ubuntu/",
-	// 	Suite:      "jammy",
-	// },
-	// {
-	// 	ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/focal/Release",
-	// 	Registry:   "http://archive.ubuntu.com/ubuntu/",
-	// 	Suite:      "focal",
-	// },
-	// {
-	// 	ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/devel/Release",
-	// 	Registry:   "http://archive.ubuntu.com/ubuntu/",
-	// 	Suite:      "devel",
-	// },
-	// {
-	// 	ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/lunar/Release",
-	// 	Registry:   "http://archive.ubuntu.com/ubuntu/",
-	// 	Suite:      "lunar",
-	// },
 	{
+		Id:         "1",
 		ReleaseUrl: "http://archive.ubuntu.com/ubuntu/dists/mantic/Release",
 		Registry:   "http://archive.ubuntu.com/ubuntu/",
 		Suite:      "mantic",
@@ -61,6 +40,17 @@ const (
 
 type PkgContainer struct {
 	pkgs []api.Package
+}
+
+type Release struct {
+	Id         string `yaml:"Id"`
+	ReleaseUrl string `yaml:"ReleaseUrl"`
+	Registry   string `yaml:"Registry"`
+	Suite      string `yaml:"Suite"`
+}
+
+type Config struct {
+	Releases []Release
 }
 
 var container PkgContainer
@@ -140,11 +130,26 @@ func Render(ctx echo.Context, statusCode int, t templ.Component) error {
 //go:embed static
 var static embed.FS
 
-//go:generate npm run build
+//go:embed config.yml
+var configFile string
+
+func parseConfig() Config {
+	cfg := Config{}
+	decoder := yaml.NewDecoder(strings.NewReader(configFile))
+	err := decoder.Decode(&cfg)
+	if err != nil {
+		panic(err)
+	}
+	return cfg
+}
+
 func main() {
+
 	e := echo.New()
 	assetHandler := http.FileServer(http.FS(static))
-	// e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", assetHandler)))
+	config := parseConfig()
+	fmt.Println(config)
+
 	e.GET("/static/*", echo.WrapHandler(assetHandler))
 
 	e.GET("/", index)
